@@ -1,6 +1,5 @@
 const express = require("express");
-const GoogleGenAI = require("@google/genai");
-const axios = require("axios");
+import { GoogleGenAI } from "@google/genai";
 const router = express.Router();
 
 const ai = new GoogleGenAI({
