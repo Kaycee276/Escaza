@@ -7,7 +7,7 @@ import { createEntry } from "../api/entries";
 
 import { useEntries } from "../hooks/useEntries";
 
-import { autocompleteEntry } from "../services/ai";
+import { fetchAutoComplete } from "../api/ai";
 
 import MiniLoader from "../common/MiniLoader";
 
@@ -87,7 +87,7 @@ const Entries = () => {
 
 			setIsLoadingSuggestion(true);
 			try {
-				const suggestion = await autocompleteEntry(text, title);
+				const suggestion = await fetchAutoComplete(text, title);
 				if (suggestion) {
 					setSuggestions([suggestion]);
 				} else {
