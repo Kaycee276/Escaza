@@ -87,9 +87,10 @@ const Entries = () => {
 
 			setIsLoadingSuggestion(true);
 			try {
-				const suggestion = await fetchAutoComplete(text, title);
-				if (suggestion) {
-					setSuggestions([suggestion]);
+				const result = await fetchAutoComplete(text, title);
+
+				if (result && typeof result.suggestions === "string") {
+					setSuggestions([result.suggestions]);
 				} else {
 					setSuggestions([]);
 				}

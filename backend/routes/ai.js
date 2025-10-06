@@ -40,11 +40,6 @@ router.post("/autocomplete", async (req, res) => {
 			config: {
 				systemInstruction:
 					"You are a helpful assistant that helps people write personal logbook entries.",
-				maxOutputTokens: 256,
-				temperature: 0.7,
-				topP: 0.95,
-				frequencyPenalty: 0.0,
-				presencePenalty: 0.0,
 			},
 		});
 
