@@ -5,11 +5,6 @@ import { generateToken } from "../utils/jwt.js";
 import { authenticateToken } from "../middleware/auth.js";
 import { validateGoogleAuth } from "../middleware/validation.js";
 
-console.log(
-	"SUPABASE_SERVICE_ROLE_KEY:",
-	process.env.SUPABASE_SERVICE_ROLE_KEY
-);
-
 const router = express.Router();
 
 /**
