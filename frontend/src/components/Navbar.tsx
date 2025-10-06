@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
 	FiMenu,
@@ -19,9 +19,23 @@ import handleLogout from "../utils/logout";
 
 const NavBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [isScrolled, setIsScrolled] = useState(false);
 	const { user, loading } = useUser();
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY > 20) {
+				setIsScrolled(true);
+			} else {
+				setIsScrolled(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -48,7 +62,11 @@ const NavBar = () => {
 					type: "spring",
 					stiffness: 300,
 				}}
-				className="sticky top-2 md:top-0 z-50 backdrop-blur-sm shadow-lg rounded-3xl md:rounded-none"
+				className={`sticky top-2 md:top-0 z-50 transition-all duration-300 ${
+					isScrolled
+						? "bg-background/70 backdrop-blur-lg shadow-lg "
+						: "bg-transparent"
+				}`}
 			>
 				<div className="container mx-auto px-6 py-2 md:py-4">
 					<div className="flex justify-between items-center ">

@@ -1,11 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
-const authRoutes = require("./routes/auth");
-const aiRoutes = require("./routes/ai");
+import authRoutes from "./routes/auth.js";
+import aiRoutes from "./routes/ai.js";
+import entriesRoutes from "./routes/entries.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,7 +42,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
-app.use("/api/entries", require("./routes/entries"));
+app.use("/api/entries", entriesRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

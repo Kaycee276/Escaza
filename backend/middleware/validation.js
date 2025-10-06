@@ -1,9 +1,9 @@
-const { body, validationResult } = require("express-validator");
+import { body, validationResult } from "express-validator";
 
 /**
  * Middleware to handle validation errors
  */
-const handleValidationErrors = (req, res, next) => {
+export const handleValidationErrors = (req, res, next) => {
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
@@ -19,7 +19,7 @@ const handleValidationErrors = (req, res, next) => {
 /**
  * Validation rules for Google OAuth
  */
-const validateGoogleAuth = [
+export const validateGoogleAuth = [
 	body("credential")
 		.notEmpty()
 		.withMessage("Google credential is required")
@@ -27,8 +27,3 @@ const validateGoogleAuth = [
 		.withMessage("Credential must be a string"),
 	handleValidationErrors,
 ];
-
-module.exports = {
-	handleValidationErrors,
-	validateGoogleAuth,
-};

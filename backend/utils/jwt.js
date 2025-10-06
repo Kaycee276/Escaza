@@ -1,11 +1,11 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 /**
  * Generate JWT token
  * @param {Object} payload - The payload to encode in the token
  * @returns {string} - The generated JWT token
  */
-const generateToken = (payload) => {
+export const generateToken = (payload) => {
 	return jwt.sign(payload, process.env.JWT_SECRET, {
 		expiresIn: process.env.JWT_EXPIRES_IN || "7d",
 	});
@@ -16,7 +16,7 @@ const generateToken = (payload) => {
  * @param {string} token - The JWT token to verify
  * @returns {Object} - The decoded payload or error
  */
-const verifyToken = (token) => {
+export const verifyToken = (token) => {
 	try {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 		return {
@@ -36,15 +36,9 @@ const verifyToken = (token) => {
  * @param {string} authHeader - The Authorization header
  * @returns {string|null} - The extracted token or null
  */
-const extractTokenFromHeader = (authHeader) => {
+export const extractTokenFromHeader = (authHeader) => {
 	if (!authHeader || !authHeader.startsWith("Bearer ")) {
 		return null;
 	}
 	return authHeader.substring(7);
-};
-
-module.exports = {
-	generateToken,
-	verifyToken,
-	extractTokenFromHeader,
 };

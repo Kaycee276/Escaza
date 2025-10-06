@@ -1,9 +1,14 @@
-const express = require("express");
-const supabase = require("../utils/supabase");
-const { verifyGoogleToken } = require("../utils/googleAuth");
-const { generateToken } = require("../utils/jwt");
-const { authenticateToken } = require("../middleware/auth");
-const { validateGoogleAuth } = require("../middleware/validation");
+import express from "express";
+import supabase from "../utils/supabase.js";
+import { verifyGoogleToken } from "../utils/googleAuth.js";
+import { generateToken } from "../utils/jwt.js";
+import { authenticateToken } from "../middleware/auth.js";
+import { validateGoogleAuth } from "../middleware/validation.js";
+
+console.log(
+	"SUPABASE_SERVICE_ROLE_KEY:",
+	process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const router = express.Router();
 
@@ -146,4 +151,4 @@ router.get("/verify", authenticateToken, (req, res) => {
 	});
 });
 
-module.exports = router;
+export default router;

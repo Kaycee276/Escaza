@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 import { GoogleGenAI } from "@google/genai";
 const router = express.Router();
 
@@ -55,4 +55,4 @@ router.post("/autocomplete", async (req, res) => {
 	}
 });
 
-module.exports = router;
+export default router;

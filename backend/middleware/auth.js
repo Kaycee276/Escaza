@@ -1,9 +1,10 @@
-const { verifyToken, extractTokenFromHeader } = require("../utils/jwt");
+import { verifyToken } from "../utils/jwt.js";
+import { extractTokenFromHeader } from "../utils/jwt.js";
 
 /**
  * Middleware to authenticate JWT tokens
  */
-const authenticateToken = (req, res, next) => {
+export const authenticateToken = (req, res, next) => {
 	const authHeader = req.headers.authorization;
 	const token = extractTokenFromHeader(authHeader);
 
@@ -31,7 +32,7 @@ const authenticateToken = (req, res, next) => {
  * Optional authentication middleware
  * Doesn't fail if no token is provided
  */
-const optionalAuth = (req, res, next) => {
+export const optionalAuth = (req, res, next) => {
 	const authHeader = req.headers.authorization;
 	const token = extractTokenFromHeader(authHeader);
 
@@ -43,9 +44,4 @@ const optionalAuth = (req, res, next) => {
 	}
 
 	next();
-};
-
-module.exports = {
-	authenticateToken,
-	optionalAuth,
 };
