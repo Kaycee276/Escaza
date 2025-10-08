@@ -64,9 +64,10 @@ const NavBar = () => {
 				}}
 				className={`sticky top-2 md:top-0 z-50 transition-all duration-300 ${
 					isScrolled
-						? "bg-background/70 backdrop-blur-lg shadow-lg "
-						: "bg-transparent"
+						? "bg-[var(--bg)]/10 backdrop-blur-md backdrop-contrast-100 backdrop-saturate-150 shadow-lg rounded-b-2xl "
+						: "bg-transparent shadow-none"
 				}`}
+				style={{ backfaceVisibility: isScrolled ? "hidden" : "visible" }}
 			>
 				<div className="container mx-auto px-6 py-2 md:py-4">
 					<div className="flex justify-between items-center ">
