@@ -16,23 +16,23 @@ router.post("/autocomplete", async (req, res) => {
 				.json({ error: "inputText and inputTitle are required" });
 		}
 
-		const prompt = `You are an AI assistant for a personal logbook. Based on the provided entry title and any original text, generate a concise bullet-point logbook entry. Your response should:
+		const prompt = `You are an AI assistant for a personal logbook. The provided entry title and original text may contain markdown formatting (such as lists, bold, italics, links, etc.). When generating your response:
 
-	- Include up to two relevant and specific bullet points reflecting personal experiences, activities, or reflections connected to the title.
-	- Maximum of 15 words per bullet point.
-	- Make each bullet point clear, original, and directly related to the topic—avoid generic or vague statements.
-	- Expand briefly on each point (1 sentences per bullet) to add meaningful context.
-	- Do not invent unrealistic information; use plausible details if needed.
-	- Ensure the tone is friendly, thoughtful, and suitable for a private logbook.
-	- Avoid repeating phrases or ideas.
-	- Do not include any introductory or concluding text—only the bullet points.
-	- Format the output as a markdown list.
-	- Use proper punctuation and capitalization.
-	
-	Title: "${inputTitle}"  
-	Original text: "${inputText}"
-	
-	Write a logbook entry as a bulleted list (maximum 3 bullets):`;
+		- Preserve any relevant markdown formatting from the input.
+		- Format your output as a markdown list.
+		- Include up to two relevant and specific bullet points reflecting personal experiences, activities, or reflections connected to the title.
+		- Maximum of 15 words per bullet point.
+		- Make each bullet point clear, original, and directly related to the topic—avoid generic or vague statements.
+		- Do not invent unrealistic information; use plausible details if needed.
+		- Ensure the tone is friendly, thoughtful, and suitable for a private logbook.
+		- Avoid repeating phrases or ideas.
+		- Do not include any introductory or concluding text—only the bullet points.
+		- Use proper punctuation and capitalization.
+
+		Title: "${inputTitle}"  
+		Original text (may include markdown): "${inputText}"
+
+		Write a logbook entry as a bulleted list (maximum 2 bullets), using markdown formatting where appropriate.`;
 
 		const response = await ai.models.generateContent({
 			model: "gemini-2.5-flash",

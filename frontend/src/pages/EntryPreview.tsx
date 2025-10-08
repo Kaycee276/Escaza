@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 import { ArrowLeft } from "lucide-react";
+import { ImSpinner8 } from "react-icons/im";
 
 import { getEntry, updateEntry, deleteEntry } from "../api/entries";
 
@@ -22,6 +23,7 @@ const EntryPreview = () => {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [status, setStatus] = useState<Entry["status"]>("completed");
+	const [isSaving, setIsSaving] = useState(false);
 
 	// delete confirmation modal state
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -62,6 +64,12 @@ const EntryPreview = () => {
 				return;
 			}
 			if (!id) return;
+			setIsSaving(true);
+			if (!title.trim() || !content.trim()) {
+				showToast("Title and content cannot be empty", "error");
+				setIsSaving(false);
+				return;
+			}
 			const updated = await updateEntry(token, id, {
 				title,
 				content,
@@ -73,6 +81,8 @@ const EntryPreview = () => {
 		} catch (e: unknown) {
 			const message = e instanceof Error ? e.message : "Failed to update entry";
 			showToast(message, "error");
+		} finally {
+			setIsSaving(false);
 		}
 	};
 
@@ -169,7 +179,11 @@ const EntryPreview = () => {
 						<button
 							onClick={handleSave}
 							className="px-4 py-2 rounded-lg my-accent-bg text-white"
+							disabled={isSaving}
 						>
+							{isSaving ? (
+								<ImSpinner8 className="animate-spin inline-block mr-2" />
+							) : null}
 							Save Changes
 						</button>
 					</div>
