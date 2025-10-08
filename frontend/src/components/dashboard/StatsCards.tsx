@@ -81,7 +81,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ dashboardData, progress }) => {
 
 				{/* Front Card */}
 				<motion.div
-					className={`absolute inset-0 rounded-2xl p-6 shadow-sm border border-[var(--border)] hover:shadow-md transition-all cursor-pointer  ${
+					className={`absolute inset-0 rounded-2xl p-6 shadow-sm border border-[var(--border)] hover:shadow-md transition-all cursor-pointer   ${
 						showCompleted
 							? "z-20 opacity-100"
 							: "z-0 opacity-0 pointer-events-none"
@@ -115,7 +115,7 @@ const StatsCards: React.FC<StatsCardsProps> = ({ dashboardData, progress }) => {
 					<h3 className="font-semibold text-[var(--text-secondary)]">
 						Completed Entries
 					</h3>
-					<p className="text-sm text-[var(--text-tertiary)]">
+					<p className="lg:text-sm text-[var(--text-tertiary)] text-xs ">
 						{completedEntriesCount > 0
 							? "Great job completing these!"
 							: "No entries completed yet."}
