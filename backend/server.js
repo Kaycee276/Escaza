@@ -31,11 +31,11 @@ app.set("trust proxy", 1); // Trust first proxy
 app.disable("x-powered-by"); // Hide Express usage
 
 // Rate limiting
-const authLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	max: 10,
-	message: "Too many login attempts. Try again in 15 minutes.",
-});
+// const authLimiter = rateLimit({
+// 	windowMs: 15 * 60 * 1000,
+// 	max: 10,
+// 	message: "Too many login attempts. Try again in 15 minutes.",
+// });
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000,
@@ -49,7 +49,7 @@ const aiLimiter = rateLimit({
 	message: "Too many requests to AI service. Try again later.",
 });
 
-app.use("/api/auth", authLimiter);
+// app.use("/api/auth", authLimiter);
 app.use("/api", apiLimiter);
 app.use("/api/ai", aiLimiter);
 
