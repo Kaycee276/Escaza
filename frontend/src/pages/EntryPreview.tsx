@@ -121,7 +121,7 @@ const EntryPreview = () => {
 					<input
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
-						className="text-3xl font-bold bg-transparent border-b border-[var(--border)] outline-none flex-1 break-words"
+						className="text-3xl font-bold bg-transparent border-b border-[var(--border)] outline-none flex-1 break-words max-w-[70%]"
 					/>
 				) : (
 					<h1 className="text-3xl font-bold truncate max-w-[70%] break-words">
