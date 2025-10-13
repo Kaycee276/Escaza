@@ -18,6 +18,7 @@ const Toast = ({ duration = 3000 }: { duration?: number }) => {
 		success: "border-[var(--success)]/20 text-[var(--success)]",
 		error: "border-[var(--error)]/20 text-[var(--error)]",
 		info: "border-[var(--info)]/20 text-[var(--info)]",
+		warning: "border-[var(--warning)]/20 text-[var(--warning)]",
 	};
 
 	return (

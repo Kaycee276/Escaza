@@ -17,7 +17,7 @@ const handleLogout = async ({
 				},
 			});
 		}
-		showToast("Logged out successfully", "success");
+		showToast("Logged out successfully", "info");
 	} catch (error) {
 		console.error("Logout error:", error);
 		showToast("Error during logout", "error");

@@ -82,7 +82,6 @@ const Dashboard = () => {
 				const data = await fetchUser(token);
 				setUser(data.user);
 
-				// Always set dashboardData, even if entries is empty
 				const recentEntries =
 					entries.length > 0
 						? entries
@@ -139,6 +138,7 @@ const Dashboard = () => {
 		};
 
 		getUser();
+
 		// eslint-disable-next-line
 	}, [navigate, entries]);
 

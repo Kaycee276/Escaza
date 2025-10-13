@@ -5,6 +5,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 
+// Routes import
 import authRoutes from "./routes/auth.js";
 import aiRoutes from "./routes/ai.js";
 import entriesRoutes from "./routes/entries.js";
@@ -80,7 +81,6 @@ app.use("/api/ai", aiRoutes);
 app.use("/api/entries", entriesRoutes);
 
 // Error handling middleware
-
 app.use((err, req, res, next) => {
 	console.error(err);
 	const status = err.statusCode || 500;

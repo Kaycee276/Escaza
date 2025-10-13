@@ -56,11 +56,11 @@ const NavBar = () => {
 				initial={{ y: -50, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{
-					duration: 0.6,
-					delay: 0.2,
-					ease: "easeOut",
-					type: "spring",
-					stiffness: 300,
+					// delay: 0.2,
+					ease: "easeInOut",
+					duration: 0.2,
+					type: "tween",
+					// stiffness: 300,
 				}}
 				className={`sticky top-2 md:top-0 z-50 transition-all duration-300 ${
 					isScrolled

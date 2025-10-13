@@ -37,7 +37,7 @@ const SignIn = () => {
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, ease: "easeOut" }}
-					className="bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border)] shadow-sm p-8"
+					className="bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border)] shadow-lg p-8"
 				>
 					{/* Header */}
 					<div className="text-center mb-8">

@@ -1,5 +1,4 @@
-import { lazy, useEffect } from "react";
-import { Suspense } from "react";
+import { lazy, useEffect, Suspense } from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -9,16 +8,14 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Toast from "./common/Toast";
 
-const Home = lazy(() => import("./pages"));
 const Loader = lazy(() => import("./common/Loader"));
+
+const Home = lazy(() => import("./pages"));
 const SignIn = lazy(() => import("./pages/SignIn"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Page404 = lazy(() => import("./pages/404"));
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-
-// Debug: Check if clientId is loaded
-// console.log("Google Client ID:", clientId);
 
 const App = () => {
 	const theme = useThemeStore((state) => state.theme);
