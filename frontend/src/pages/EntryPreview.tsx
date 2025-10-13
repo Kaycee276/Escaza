@@ -95,7 +95,7 @@ const EntryPreview = () => {
 			}
 			if (!id) return;
 			await deleteEntry(token, id);
-			showToast("Entry deleted successfully", "success");
+			showToast("Entry deleted successfully", "info");
 			navigate("/dashboard/entries");
 		} catch (e: unknown) {
 			const message = e instanceof Error ? e.message : "Failed to delete entry";
@@ -121,10 +121,10 @@ const EntryPreview = () => {
 					<input
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
-						className="text-3xl font-bold bg-transparent border-b border-[var(--border)] outline-none flex-1 break-words max-w-[70%]"
+						className="text-3xl font-bold bg-transparent border-b border-[var(--border)] outline-none flex-1 break-words max-w-[70%] text-ellipsis"
 					/>
 				) : (
-					<h1 className="text-3xl font-bold truncate max-w-[70%] break-words">
+					<h1 className="text-3xl font-bold truncate max-w-[70%] break-words text-ellipsis">
 						{entry.title}
 					</h1>
 				)}

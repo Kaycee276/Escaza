@@ -31,6 +31,7 @@ app.set("trust proxy", 1); // Trust first proxy
 app.disable("x-powered-by"); // Hide Express usage
 
 // Rate limiting
+
 // const authLimiter = rateLimit({
 // 	windowMs: 15 * 60 * 1000,
 // 	max: 10,

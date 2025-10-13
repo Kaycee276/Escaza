@@ -151,7 +151,7 @@ const Entries = () => {
 			initial="hidden"
 			animate="visible"
 			variants={containerVariants}
-			className="flex-1 p-6 md:p-12 w-full pb-20 md:pb-18"
+			className="flex-1 p-6 md:p-12 w-full pb-20 overflow-auto"
 		>
 			<div className="flex items-center justify-between mb-6">
 				<h1 className="text-3xl font-bold">New Entry</h1>
