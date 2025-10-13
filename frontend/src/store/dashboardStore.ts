@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import type { Entry } from "../api/entries";
 
-interface UserData {
+export interface UserData {
 	id: string;
 	email: string;
 	name: string;
@@ -29,8 +29,6 @@ export interface DashboardData {
 }
 
 interface DashboardState {
-	user: UserData | null;
-	setUser: (user: UserData | null) => void;
 	dashboardData: DashboardData | null;
 	setDashboardData: (data: DashboardData | null) => void;
 	activeTab: string;
@@ -38,8 +36,6 @@ interface DashboardState {
 }
 
 export const useDashboardStore = create<DashboardState>((set) => ({
-	user: null,
-	setUser: (user) => set({ user }),
 	dashboardData: null,
 	setDashboardData: (dashboardData) => set({ dashboardData }),
 	activeTab: "overview",

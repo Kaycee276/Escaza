@@ -7,11 +7,12 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/dashboard/Sidebar";
 
 import { useDashboardStore } from "../store/dashboardStore";
+import { useUserStore } from "../store/userStore";
 import { useToastStore } from "../store/toastStore";
 
 // import { listEntries } from "../api/entries";
 // import type { Entry } from "../api/entries";
-import { fetchUser } from "../api/FetchUser";
+// import { fetchUser } from "../api/FetchUser";
 
 import { useEntries } from "../hooks/useEntries";
 
@@ -59,14 +60,9 @@ const Dashboard = () => {
 	const location = useLocation();
 	const showToast = useToastStore((state) => state.showToast);
 
-	const {
-		user,
-		setUser,
-		dashboardData,
-		setDashboardData,
-		activeTab,
-		setActiveTab,
-	} = useDashboardStore();
+	const { dashboardData, setDashboardData, activeTab, setActiveTab } =
+		useDashboardStore();
+	const user = useUserStore((state) => state.user);
 	const loading = !user || !dashboardData;
 	const { entries } = useEntries();
 
@@ -77,11 +73,9 @@ const Dashboard = () => {
 			return;
 		}
 
-		const getUser = async () => {
+		const populateDashboard = async () => {
 			try {
-				const data = await fetchUser(token);
-				setUser(data.user);
-
+				// Use existing entries to populate dashboard widgets
 				const recentEntries =
 					entries.length > 0
 						? entries
@@ -131,13 +125,12 @@ const Dashboard = () => {
 				localStorage.removeItem("token");
 				localStorage.removeItem("user");
 				showToast("Session expired. Please sign in again.", "error");
-				setUser(null);
 				setDashboardData(null);
 				navigate("/signin");
 			}
 		};
 
-		getUser();
+		populateDashboard();
 
 		// eslint-disable-next-line
 	}, [navigate, entries]);

@@ -7,6 +7,8 @@ import { useThemeStore } from "./store/themeStore";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import Toast from "./common/Toast";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import { useUserStore } from "./store/userStore";
 
 const Loader = lazy(() => import("./common/Loader"));
 
@@ -19,6 +21,7 @@ const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const App = () => {
 	const theme = useThemeStore((state) => state.theme);
+	const validateSession = useUserStore((state) => state.validateSession);
 
 	useEffect(() => {
 		if (theme === "dark") {
@@ -27,6 +30,11 @@ const App = () => {
 			document.documentElement.classList.remove("dark");
 		}
 	}, [theme]);
+
+	useEffect(() => {
+		validateSession();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<GoogleOAuthProvider clientId={clientId}>
@@ -37,7 +45,14 @@ const App = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/sign-in" element={<SignIn />} />
 						<Route path="/signin" element={<SignIn />} />
-						<Route path="/dashboard/*" element={<Dashboard />} />
+						<Route
+							path="/dashboard/*"
+							element={
+								<ProtectedRoute>
+									<Dashboard />
+								</ProtectedRoute>
+							}
+						/>
 						<Route path="*" element={<Page404 />} />
 					</Routes>
 				</Suspense>

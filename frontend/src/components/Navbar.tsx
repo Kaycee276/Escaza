@@ -12,7 +12,7 @@ import {
 import ThemeToggle from "../common/ThemeToggle";
 import SignUpBtn from "../common/SignUpBtn";
 import Logo from "../common/Logo";
-import { useUser } from "../hooks/useUser";
+import { useUserStore } from "../store/userStore";
 import UserProfile from "../common/UserProfile";
 import { useNavigate, useLocation, useMatch } from "react-router-dom";
 import handleLogout from "../utils/logout";
@@ -20,7 +20,8 @@ import handleLogout from "../utils/logout";
 const NavBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isScrolled, setIsScrolled] = useState(false);
-	const { user, loading } = useUser();
+	const user = useUserStore((state) => state.user);
+	const loading = useUserStore((state) => state.loading);
 	const navigate = useNavigate();
 	const location = useLocation();
 

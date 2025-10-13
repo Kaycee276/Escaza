@@ -1,21 +1,28 @@
+// Add logout functionality - Logout button in navbar with proper cleanup
 import { useToastStore } from "../store/toastStore";
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+import { useUserStore } from "../store/userStore";
+import { useDashboardStore } from "../store/dashboardStore";
+import apiClient from "../api/client";
 const handleLogout = async ({
 	navigate,
 }: {
 	navigate: (path: string) => void;
 }) => {
 	const showToast = useToastStore.getState().showToast;
+	const setUser = useUserStore.getState().setUser;
+	const setDashboardData = useDashboardStore.getState().setDashboardData;
 	try {
 		const token = localStorage.getItem("token");
 		if (token) {
-			await fetch(`${BACKEND_URL}/api/auth/logout`, {
-				method: "POST",
-				headers: {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-				},
-			});
+			await apiClient.post<{ success: boolean }>(
+				"/api/auth/logout",
+				undefined,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 		}
 		showToast("Logged out successfully", "info");
 	} catch (error) {
@@ -24,6 +31,8 @@ const handleLogout = async ({
 	} finally {
 		localStorage.removeItem("token");
 		localStorage.removeItem("user");
+		setUser(null);
+		setDashboardData(null);
 		navigate("/");
 	}
 };

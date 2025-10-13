@@ -15,18 +15,15 @@ export const useEntries = () => {
 				setLoading(true);
 				const token = localStorage.getItem("token");
 				if (!token) {
-					setLoading(false);
 					navigate("/signin");
 					return;
 				}
 				const data = await listEntries(token);
 				setEntries(data);
-				setLoading(false);
 			} catch (e: unknown) {
 				const message =
 					e instanceof Error ? e.message : "Failed to load entries";
 				setError(message);
-				setLoading(false);
 			} finally {
 				setLoading(false);
 			}

@@ -1,21 +1,13 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+import apiClient from "./client";
 
 export const fetchAutoComplete = async (
 	inputText: string,
 	inputTitle: string
 ) => {
-	const response = await fetch(`${BACKEND_URL}/api/ai/autocomplete`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ inputText, inputTitle }),
-	});
-
-	if (!response.ok) {
-		throw new Error("Failed to fetch autocomplete");
-	}
-
-	const data = await response.json();
+	const data = await apiClient.post<{ suggestions: string[] }>(
+		`/api/ai/autocomplete`,
+		{ inputText, inputTitle },
+		{ auth: false }
+	);
 	return data;
 };

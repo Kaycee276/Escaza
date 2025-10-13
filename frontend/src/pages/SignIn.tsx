@@ -4,13 +4,14 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useThemeStore } from "../store/themeStore";
 import { motion } from "framer-motion";
 import { useToastStore } from "../store/toastStore";
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+import { useUserStore } from "../store/userStore";
+import apiClient from "../api/client";
 
 const SignIn = () => {
 	const theme = useThemeStore((state) => state.theme);
 	const navigate = useNavigate();
 	const showToast = useToastStore((state) => state.showToast);
+	const setUser = useUserStore((state) => state.setUser);
 
 	return (
 		<div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
@@ -54,37 +55,30 @@ const SignIn = () => {
 						<GoogleLogin
 							onSuccess={async (credentialResponse) => {
 								try {
-									const response = await fetch(
-										`${BACKEND_URL}/api/auth/google`,
-										{
-											method: "POST",
-											headers: {
-												"Content-Type": "application/json",
-											},
-											body: JSON.stringify({
-												credential: credentialResponse.credential,
-											}),
-										}
+									const data = await apiClient.post<{
+										token: string;
+										user: {
+											id: string;
+											email: string;
+											name: string;
+											picture: string;
+											emailVerified: boolean;
+										};
+									}>(
+										`/api/auth/google`,
+										{ credential: credentialResponse.credential },
+										{ auth: false }
 									);
 
-									if (response.ok) {
-										const data = await response.json();
-										localStorage.setItem("token", data.token);
-										localStorage.setItem("user", JSON.stringify(data.user));
-										showToast(
-											"Login Success 🎉 Redirecting to dashboard...",
-											"success"
-										);
-										navigate("/dashboard");
-									} else {
-										const errorData = await response.json();
-										showToast(
-											`Authentication failed: ${
-												errorData.message || "Unknown error"
-											}`,
-											"error"
-										);
-									}
+									localStorage.setItem("token", data.token);
+									localStorage.setItem("user", JSON.stringify(data.user));
+									setUser(data.user);
+									showToast(
+										"Login Success 🎉 Redirecting to dashboard...",
+										"success"
+									);
+									// Immediately navigate; ProtectedRoute will render loader during validation
+									navigate("/dashboard", { replace: true });
 								} catch (error) {
 									console.error("Authentication failed:", error);
 									showToast(
