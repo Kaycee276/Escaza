@@ -1,5 +1,22 @@
 import { motion } from "framer-motion";
+import { useCalendarStore } from "../store/calendarStore";
+import { listVariants, cardVariants } from "../utils/framerVariants";
+import {
+	formatDateUserFriendly,
+	formatDateForInput,
+} from "../utils/formatDate";
+import { ArrowRight } from "lucide-react";
+
 const Calender = () => {
+	const {
+		startDate,
+		endDate,
+		dates,
+		completedByDate,
+		toggleDay,
+		planMarkdown,
+		itemsByDate,
+	} = useCalendarStore();
 	return (
 		<motion.div
 			className="flex-1 p-4 md:p-8 w-full"
@@ -15,24 +32,66 @@ const Calender = () => {
 			>
 				Calender
 			</motion.h1>
-			<motion.p
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.3, duration: 0.5 }}
-				className="text-[var(--text-secondary)]"
-			>
-				No calender set yet. Create one here
-			</motion.p>
+			{dates.length === 0 ? (
+				<motion.p
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.3, duration: 0.5 }}
+					className="text-[var(--text-secondary)]"
+				>
+					No calender set yet. Use AI Tools to generate one.
+				</motion.p>
+			) : (
+				<div className="space-y-6">
+					<motion.p
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.3, duration: 0.5 }}
+						className="text-[var(--text-secondary)]"
+					>
+						{formatDateUserFriendly(startDate || "")}{" "}
+						<ArrowRight size={16} className="inline-block" />{" "}
+						{formatDateUserFriendly(endDate || "")}
+					</motion.p>
 
-			{/* generate a button that when clicked it prompts the user for the number of days hoped to be filled and then creates a calender for that many days with each day having a checkbox to mark it as completed */}
-			<motion.button
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.4, duration: 0.5 }}
-				className="mt-4 px-4 py-2 my-accent-bg rounded-lg transition-colors"
-			>
-				Create Calender
-			</motion.button>
+					{planMarkdown && (
+						<div>
+							<h2 className="text-xl font-semibold mb-3">
+								Planned Tasks ({dates.length})
+							</h2>
+							<motion.div
+								variants={listVariants}
+								initial="hidden"
+								animate="visible"
+								className="grid gap-3 md:grid-cols-2 lg:grid-cols-3"
+							>
+								{dates.map((d) => (
+									<motion.label
+										key={d}
+										variants={cardVariants}
+										onClick={() => toggleDay(d)}
+										style={{
+											border: completedByDate[d]
+												? "1px solid var(--success)"
+												: "1px solid var(--border)",
+										}}
+										className="flex items-start gap-3 p-4 rounded-xl bg-[var(--bg-primary)] border border-[var(--border)] shadow-sm"
+									>
+										<div>
+											<div className="text-xs text-[var(--text-secondary)] mb-1">
+												{formatDateForInput(d)}
+											</div>
+											<div className="text-sm">
+												{itemsByDate?.[d] || "No specific task"}
+											</div>
+										</div>
+									</motion.label>
+								))}
+							</motion.div>
+						</div>
+					)}
+				</div>
+			)}
 		</motion.div>
 	);
 };

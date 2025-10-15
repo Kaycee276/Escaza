@@ -73,6 +73,18 @@ button {
 	cursor: pointer;
 }
 
+button:disabled {
+	cursor: not-allowed;
+}
+
+input:disabled {
+	cursor: not-allowed;
+}
+
+textarea:disabled {
+	cursor: not-allowed;
+}
+
 .my-accent-bg {
 	background: var(--accent-gradient);
 }

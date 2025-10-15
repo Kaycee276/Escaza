@@ -11,3 +11,23 @@ export const fetchAutoComplete = async (
 	);
 	return data;
 };
+
+export type ITPlanResponse = {
+	planMarkdown: string;
+	startDate: string;
+	endDate: string;
+	dates: string[];
+	title?: string;
+	entries?: Array<{ date: string; title: string; content: string }>;
+};
+
+export const generateITPlan = async (params: {
+	workDescription: string;
+	startDate?: string;
+	endDate?: string;
+	durationDays?: number;
+}) => {
+	return apiClient.post<ITPlanResponse>(`/api/ai/it-plan`, params, {
+		auth: false,
+	});
+};

@@ -25,9 +25,9 @@ const ProgressSummary: React.FC<ProgressSummaryProps> = ({
 						<span className="text-[var(--text-secondary)]">Completion</span>
 						<span className="font-medium">{Math.round(progress)}%</span>
 					</div>
-					<div className="w-full bg-white rounded-full h-2">
+					<div className="w-full bg-white px-[1px] rounded-full h-2">
 						<div
-							className="my-accent-bg h-2 rounded-full transition-all duration-500"
+							className="my-accent-bg h-2 transition-all duration-500"
 							style={{ width: `${progress}%` }}
 						></div>
 					</div>
